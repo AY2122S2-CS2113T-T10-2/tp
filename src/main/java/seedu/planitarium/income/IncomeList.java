@@ -25,6 +25,8 @@ public class IncomeList {
     private static final String LOG_GET_TOTAL_INC = "getTotalIncome()";
     private static final String LOG_PRINT_LIST = "printIncomeList()";
 
+
+
     /**
      * Creates a new Income Object.
      */
@@ -120,4 +122,9 @@ public class IncomeList {
             System.out.println(listIndex++ + ". " + item);
         }
     }
+
+    public ArrayList<Income> getIncomeArrayList() {
+        return incomeArrayList;
+    }
+
 }

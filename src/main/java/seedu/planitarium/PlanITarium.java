@@ -6,6 +6,7 @@ import java.util.Scanner;
 import seedu.planitarium.commands.Command;
 import seedu.planitarium.commands.CommandFactory;
 import seedu.planitarium.person.PersonList;
+import seedu.planitarium.storage.Storage;
 import seedu.planitarium.ui.UI;
 
 public class PlanITarium {
@@ -13,6 +14,7 @@ public class PlanITarium {
     protected Command command;
     protected PersonList personList = new PersonList();
     protected CommandFactory commandFactory = new CommandFactory();
+    protected static Storage storage = new Storage();
     protected static ProjectLogger logger;
 
     public static void main(String[] args) {
@@ -25,6 +27,7 @@ public class PlanITarium {
      */
     public void run() {
         userInput = new Scanner(System.in);
+        personList = storage.loadData();
         while (true) {
             try {
                 command = commandFactory.getCommand(userInput.nextLine(), personList);

@@ -39,4 +39,8 @@ public class Income {
     public String toString() {
         return  description + ": $" + String.format("%.2f", amount);
     }
+
+    public String saveString() {
+        return "i "+ description + " - " + amount;
+    }
 }

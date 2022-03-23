@@ -1,7 +1,12 @@
 package seedu.planitarium.person;
 
+import seedu.planitarium.expenditure.Expenditure;
+import seedu.planitarium.income.Income;
 import seedu.planitarium.income.IncomeList;
 import seedu.planitarium.expenditure.ExpenditureList;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class Person {
     protected String name;
@@ -142,5 +147,17 @@ public class Person {
      */
     public int getNumberOfExpenditures() {
         return expenditureList.getNumberOfExpenditures();
+    }
+
+    public ArrayList<Income> getIncomeList() {
+        return incomeList.getIncomeArrayList();
+    }
+
+    public ArrayList<Expenditure> getExpenditureList() {
+        return expenditureList.getExpenditureArrayList();
+    }
+
+    public String saveName() {
+        return "u " + name;
     }
 }

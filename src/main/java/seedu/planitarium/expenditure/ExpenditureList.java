@@ -11,6 +11,7 @@ public class ExpenditureList {
     private int numberOfExpenditures;
     private ProjectLogger logger;
 
+
     /**
      * Creates a new ExpenditureList object.
      */
@@ -109,5 +110,9 @@ public class ExpenditureList {
         assert (index <= numberOfExpenditures);
         logger.getLogger().log(Level.INFO, "Passed getDescription() Assertions");
         return expenditureArrayList.get(index - 1).getDescription();
+    }
+
+    public ArrayList<Expenditure> getExpenditureArrayList() {
+        return expenditureArrayList;
     }
 }

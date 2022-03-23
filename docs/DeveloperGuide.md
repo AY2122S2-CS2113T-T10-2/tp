@@ -213,7 +213,7 @@ been created by [`CommandFactory`](#PlaceholderToCommandFactory):
 
 ##### Proposed implementation
 
-The proposed saving and loading mechanism is facilitated by `Family`. It loads records of `PersonList` for each logical 
+The proposed saving and loading mechanism is facilitated by `Storage`. It loads records of `PersonList` for each logical 
 grouping inside family from a local file, process the data and adds the record to `Family` for the current session. 
 Saves the `PersonList` record of each `Family` grouping back into the local file upon exit of the program. It implements 
 the following operations:

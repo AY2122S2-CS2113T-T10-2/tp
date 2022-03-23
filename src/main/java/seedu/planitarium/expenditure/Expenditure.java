@@ -46,4 +46,8 @@ public class Expenditure {
         return  description + ": $" + String.format("%.2f", amount);
     }
 
+    public String saveString() {
+        return "e " + description + " - " + amount;
+    }
+
 }

@@ -1,0 +1,8 @@
+u alice
+i salary    - 3000.0
+i crypto investment  - 2000.0
+e food   - 200.0
+u bob
+i salary   - 2000.0
+u alice in wonderland
+u david
