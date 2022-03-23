@@ -73,19 +73,19 @@ The `Person` component,
 {For Jiarong}
 
 ### Storage Component
-**API: **
+The **API** of this component is specified in `Storage.java`.
 <image src="images/StorageDiagram"/>
 The `Storage` component,
 
 * can save each person's data and their income and expenditure data when the program exits into a local file, and reads
   them back into corresponding objects when the program runs again.
 * depends on the classes in the `Person` component (because the `Storage` component's job is to save/retrieve objects
-  to the `Person`)
+  to the `Person`).
 
 ---
 ## Implementation
 
-This section describes some noteworthy details on how certain features are implemented.
+This section describes some noteworthy details on how certain features are implemented
 
 ### Command Execution
 
