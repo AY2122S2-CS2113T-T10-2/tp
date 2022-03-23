@@ -109,7 +109,7 @@ indicate which generation they belong to
 
 ### Storage Component
 **API: **
-![Storage Diagram](https://raw.githubusercontent.com/AY2122S2-CS2113T-T10-2/tp/93c8356b014b03514c660487355a7a97b28dbc93/docs/images/StorageDiagram.png)
+
 The `Storage` component,
 
 * can save each person's data and their income and expenditure data when the program exits into a local file, and reads 
@@ -139,10 +139,73 @@ Maybe for Jiarong
 {Suggest to show the process from `parsing several delimiters` to `finding the
 income/expenditure` to `editing the value`.}
 
-### Listing Categorised Expenditures Feature
+### [Proposed] Listing Categorised Expenditures Feature
 
-Maybe for Sizheng
-{Suggest to show the process of iterating through lists to obtain the list of items in category}
+#### Proposed Implementation
+
+The proposed listing categorised expenditure feature is facilitated by `Categories`,
+`Money(temp)`, `MoneyList(temp)`  and `Family`. The `Categories` is an enumeration of keys
+that is used as the expenditure categories. The `Money(temp)` will have an additional integer 
+attribute that acts as an index to a category. Additionally, the following operations are 
+implemented:
+
+* `Categories#getLabel(index)` -- Returns the name of the category with this index. 
+* `Money(temp)#getCategory()` -- Returns the category index for this expense.
+* `MoneyList(temp)#getExpenseOfCategory(index)` -- Returns a list of expenditures having 
+category index matching the index argument.
+* `Family#listExpenseOfCategory(index)` -- Lists all expenses from the category index.
+
+Below is an example usage scenario and how the expenses of a category will be printed.
+
+Step 1. Given that the application already has existing data and there are two people being tracked,
+Alice and Bob, and only Alice's expenses were added and categorised. Suppose that Alice is the main
+user and Bob is her father, then Alice would belong to the current generation and Bob would belong
+to the parent generation. In this case `Family` would be initialised with two generations being
+tracked - parents and myGen.
+
+<image src="images/ListCategorisedExpense0.png"/>
+
+Step 2. The user executes `listc /c 1` command to list all expenses in category `1`. The `listcat`
+command will be parsed and calls `Family#listExpenseOfCategory(1)` which would instantiate a
+temporary array list for storing the results of the upcoming search.
+
+<image src="images/ListCategorisedExpense1.png"/>
+
+Step 3. After the temporary array list has been created, the generations being tracked will be
+iterated for `Person` objects. The `expenditureList` for a person would be retrieved during that
+person's iteration and `MoneyList(temp)#getExpenseOfCategory(1)` will be called as `expenditureList`
+extends `MoneyList(temp)`. This method then iterates through the list and calls
+`Money(temp)#getCategory()` on each expenditure, collecting and returning the expenditure if its
+category matches the given index. The returned expenditures are then appended to the temporary
+array list.
+
+<image src="images/ListCategorisedExpense2.png"/>
+
+Step 4. The iteration, collecting and appending to the temporary array list in step 3 is repeated 
+until every person has been iterated. Finally, `Categories#getLabel(1)` is called so that an
+appropriate message can be displayed to the user, stating the name of the category, following by
+a series of print to display the expenditures in this category.
+
+> :information_source: **Note:** If the `index` provided does not map to any existing categories,
+> then it can be observed that there will never be any results returned. The `listcat` command will
+> check the index provided using `Parser#checkValidCategory` before iterating `Family`. If the check
+> fails, an error message will be displayed to the user instead of continuing with the execution.
+
+The following sequence diagram shows how the `listcat` operation works after the `ListCatCommand` has
+been created by [`CommandFactory`](#PlaceholderToCommandFactory):
+<image src="images/ListCategorisedExpenseSequence.png"/>
+
+#### Design considerations:
+
+**Aspect: How to categorise expenses to be listed:**
+
+* **Alternative 1 (current choice):** Adding a category attribute to expenses.
+  * Pros: Easy to implement and less memory usage.
+  * Cons: May have performance issues as it needs to iterate through every person's expenditure.
+  
+* **Altertive 2:** Maintain an array list for each category and store a copy of expenses.
+  * Pros: Fast to print expenses in a category, no unnecessary look-ups.
+  * Cons: Poor memory management, needs to store twice as many expenditures. 
 
 ### Data Archiving
 
@@ -150,7 +213,7 @@ Maybe for Sizheng
 
 ##### Proposed implementation
 
-The proposed saving and loading mechanism is facilitated by `Family`. It loads records of `PersonList` for each logical 
+The proposed saving and loading mechanism is facilitated by `Storage`. It loads records of `PersonList` for each logical 
 grouping inside family from a local file, process the data and adds the record to `Family` for the current session. 
 Saves the `PersonList` record of each `Family` grouping back into the local file upon exit of the program. It implements 
 the following operations:
@@ -172,14 +235,14 @@ the local file `PlanITarium.txt` exists by calling `Storage#checkFileExists()` a
 in the local file will be read, parsed and added to the empty `PersonList` in `Storage` by calling `PersonList` adding 
 operations. The data in the `PersonList` will then be returned to `PersonList` for each `Family` grouping
 in the current session. The following sequence diagram shows how the loading operation works:
-![StorageLoadSequence](https://raw.githubusercontent.com/AY2122S2-CS2113T-T10-2/tp/93c8356b014b03514c660487355a7a97b28dbc93/docs/images/StorageLoadSequence.png)
+<img src="images/StorageLoadSequence.png"/>
 
 
 Step 3. The user then decides to exit the program by executing the command `bye`, `Storage#saveData` will be called.
 All data in the `Family` object will be written to the local file `PlanITarium.txt` in the format of
 `<group type> <user/operation> <Category> <Details>` which are to be read again when the program starts up. 
 The following Sequence diagram shows how the saving operation will work:
-![StorageSaveSequence diagram](https://raw.githubusercontent.com/AY2122S2-CS2113T-T10-2/tp/93c8356b014b03514c660487355a7a97b28dbc93/docs/images/StorageSaveSequence.png)
+<img src="images/StorageSaveSequence.png"/>
 
 #### Design considerations:
 
