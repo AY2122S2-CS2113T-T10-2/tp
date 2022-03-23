@@ -109,7 +109,7 @@ indicate which generation they belong to
 
 ### Storage Component
 **API: **
--- Insert puml diagram here
+![Storage Diagram](https://raw.githubusercontent.com/AY2122S2-CS2113T-T10-2/tp/93c8356b014b03514c660487355a7a97b28dbc93/docs/images/StorageDiagram.png)
 The `Storage` component,
 
 * can save each person's data and their income and expenditure data when the program exits into a local file, and reads 
@@ -172,14 +172,14 @@ the local file `PlanITarium.txt` exists by calling `Storage#checkFileExists()` a
 in the local file will be read, parsed and added to the empty `PersonList` in `Storage` by calling `PersonList` adding 
 operations. The data in the `PersonList` will then be returned to `PersonList` for each `Family` grouping
 in the current session. The following sequence diagram shows how the loading operation works:
---insert load sequence here
+![StorageLoadSequence](https://raw.githubusercontent.com/AY2122S2-CS2113T-T10-2/tp/93c8356b014b03514c660487355a7a97b28dbc93/docs/images/StorageLoadSequence.png)
 
 
 Step 3. The user then decides to exit the program by executing the command `bye`, `Storage#saveData` will be called.
 All data in the `Family` object will be written to the local file `PlanITarium.txt` in the format of
 `<group type> <user/operation> <Category> <Details>` which are to be read again when the program starts up. 
 The following Sequence diagram shows how the saving operation will work:
--- insert save sequence here
+![StorageSaveSequence diagram](https://raw.githubusercontent.com/AY2122S2-CS2113T-T10-2/tp/93c8356b014b03514c660487355a7a97b28dbc93/docs/images/StorageSaveSequence.png)
 
 #### Design considerations:
 
